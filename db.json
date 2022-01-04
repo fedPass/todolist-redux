@@ -1,0 +1,35 @@
+{
+  "todos": [
+    {
+      "completed": false,
+      "name": "Pulire garage",
+      "dueDate": "20/8/2021",
+      "user_id": 1,
+      "id": 2
+    },
+    {
+      "completed": true,
+      "name": "Ritirare completo",
+      "dueDate": "20/8/2021",
+      "user_id": 1,
+      "id": 3
+    },
+    {
+      "name": "aggiunto ora",
+      "dueDate": "27/12/2021",
+      "user_id": 1,
+      "completed": false,
+      "id": 4
+    },
+    {
+      "name": "agg ora 2",
+      "dueDate": "27/12/2021",
+      "user_id": 1,
+      "completed": false,
+      "id": 5
+    }
+  ],
+  "filter": [
+    "All"
+  ]
+}
