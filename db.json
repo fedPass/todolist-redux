@@ -3,33 +3,50 @@
     {
       "completed": false,
       "name": "Pulire garage",
-      "dueDate": "20/8/2021",
-      "user_id": 1,
+      "dueDate": "20/12/2021",
+      "list_id": 1,
       "id": 2
     },
     {
       "completed": true,
       "name": "Ritirare completo",
-      "dueDate": "20/8/2021",
-      "user_id": 1,
+      "dueDate": "20/12/2021",
+      "list_id": 3,
       "id": 3
     },
     {
       "name": "aggiunto ora",
       "dueDate": "27/12/2021",
-      "user_id": 1,
+      "list_id": 2,
       "completed": false,
       "id": 4
     },
     {
       "name": "agg ora 2",
       "dueDate": "27/12/2021",
-      "user_id": 1,
+      "list_id": 2,
       "completed": false,
       "id": 5
     }
   ],
   "filter": [
     "All"
+  ],
+  "lists":[
+    {
+      "name":"Casa",
+      "user_id": 1,
+      "id":1
+    },
+    {
+      "name":"Lavoro",
+      "user_id": 1,
+      "id":2
+    },
+    {
+      "name":"Personale",
+      "user_id": 1,
+      "id":3
+    }
   ]
 }

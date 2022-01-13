@@ -1,12 +1,14 @@
 import React, {useRef, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { addTodo, getTodos} from './features/todos/todosSlice';
 //import { getTodos } from './features/todos/thunksTodo';
 import { filterTodo} from './features/todos/filterSlice';
 import './App.css';
-import Todos from './features/todos/Todos';
-import AddTodo from './features/todos/AddTodo';
-import FilterTodo from './features/todos/FilterTodo';
+import MyTodos from './features/todos/MyTodos';
+import MyLists from './features/lists/MyLists';
+import Header from './components/Header';
+import { getLists } from './features/lists/listsSlice';
 
 function App() {
   //la dispatch dovrò farla adesso qui (invece che con redux normale) perchè le action mi ritornano l'oggetto
@@ -18,6 +20,7 @@ function App() {
   useEffect(() => {
     //chiamo l'api per prendere i todos dal json server
   dispatch(getTodos());
+  dispatch(getLists());
     return () => {}
   }, [dispatch]);  
   
@@ -25,6 +28,24 @@ function App() {
   //state sarebbe l'oggetto reducer di store.js e per accedervi uso la dot notation (.todos)
   let todos = useSelector(state => state.todos);
   const activeFilter = useSelector(state => state.filter);
+  // const lists = [
+  //   {
+  //     "name":"Casa",
+  //     "user_id": 1,
+  //     "id":1
+  //   },
+  //   {
+  //     "name":"Lavoro",
+  //     "user_id": 1,
+  //     "id":2
+  //   },
+  //   {
+  //     "name":"Personale",
+  //     "user_id": 1,
+  //     "id":3
+  //   }
+  // ];
+  let lists = useSelector(state => state.lists);
 
   todos = todos.filter(todo => {
     if (activeFilter === 'All'){
@@ -62,15 +83,22 @@ function App() {
   }
 
   return (
-    <div className="App container-fluid pt-5 pb-5">
-      <div className='row d-flex justify-content-center'>
-        <div className='col-12 col-md-4'>
-          <h1>To Do List</h1>
-          <AddTodo todoEl={todoEl} manageClick={manageClick}/>
-          <FilterTodo filter={activeFilter} onFilter={onFilterTodo}/>
-          <Todos todos={todos}/>
-        </div>
-      </div>
+    <div className="App">
+      <BrowserRouter>
+        <Header/>
+        <Routes>
+          <Route exact path='/' element={<MyLists lists={lists} />} />
+          <Route path="/lists" element={<MyLists lists={lists} />} />
+          <Route path="/todos" element={<MyTodos 
+            manageClick={manageClick} 
+            onFilterTodo={onFilterTodo}
+            activeFilter={activeFilter}
+            todos={todos}
+            todoEl={todoEl}
+            />} 
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
