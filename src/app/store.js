@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import todosReducer from '../features/todos/todosSlice';
 import filterReducer from '../features/todos/filterSlice';
+import listsReducer from '../features/lists/listsSlice';
 
 // const preloadedState = {
 //   todos: [
@@ -69,7 +70,8 @@ export const store = configureStore({
   reducer: {
     //per la fetta todos usa todosReducer
     todos: todosReducer,
-    filter:filterReducer
+    filter:filterReducer,
+    lists:listsReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myLog)
 });

@@ -23,6 +23,13 @@ function App() {
   dispatch(getLists());
     return () => {}
   }, [dispatch]);  
+
+  useEffect(() => {
+    //chiamo l'api per prendere i todos dal json server
+  dispatch(getTodos());
+  dispatch(getLists());
+    return () => {}
+  }, [dispatch]); 
   
   //per recuperare i todos dallo store use UseSelector
   //state sarebbe l'oggetto reducer di store.js e per accedervi uso la dot notation (.todos)
