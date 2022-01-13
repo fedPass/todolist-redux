@@ -33,7 +33,7 @@ export const todosSlice = createSlice({
         // }
     },
     //ogni slice reducer "possiede" la sua fetta di stato, quindi molti slice reducer possono rispondere indipendentemente allo stesso action type
-    //si riferiscono ad azioni "esterne" quindi non generano action in slice.actions
+    //extraReducers si riferiscono ad azioni "esterne" quindi non generano action in slice.actions
     //extraReducers permette a createSlice di rispondere ad altri tipi di azione oltre ai tipi che ha generato 
     extraReducers: builder => {
       // Add reducers for additional action types here, and handle loading state as needed
