@@ -63,3 +63,8 @@ button[disabled]{
   background-color: #e1e1e1!important;
   color: #999999!important;
 }
+
+.list-box {
+  border-left: 1px dotted grey;
+  border-right: 1px dotted grey;
+}

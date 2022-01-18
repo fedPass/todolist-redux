@@ -2,13 +2,11 @@ import React, {useRef, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { addTodo, getTodos} from './features/todos/todosSlice';
-//import { getTodos } from './features/todos/thunksTodo';
 import { filterTodo} from './features/todos/filterSlice';
 import './App.css';
 import MyTodos from './features/todos/MyTodos';
-import MyLists from './features/lists/MyLists';
+import Lists from './features/lists/Lists';
 import Header from './components/Header';
-import { getLists } from './features/lists/listsSlice';
 
 function App() {
   //la dispatch dovrò farla adesso qui (invece che con redux normale) perchè le action mi ritornano l'oggetto
@@ -20,39 +18,13 @@ function App() {
   useEffect(() => {
     //chiamo l'api per prendere i todos dal json server
   dispatch(getTodos());
-  dispatch(getLists());
     return () => {}
   }, [dispatch]);  
-
-  useEffect(() => {
-    //chiamo l'api per prendere i todos dal json server
-  dispatch(getTodos());
-  dispatch(getLists());
-    return () => {}
-  }, [dispatch]); 
   
   //per recuperare i todos dallo store use UseSelector
   //state sarebbe l'oggetto reducer di store.js e per accedervi uso la dot notation (.todos)
   let todos = useSelector(state => state.todos);
   const activeFilter = useSelector(state => state.filter);
-  // const lists = [
-  //   {
-  //     "name":"Casa",
-  //     "user_id": 1,
-  //     "id":1
-  //   },
-  //   {
-  //     "name":"Lavoro",
-  //     "user_id": 1,
-  //     "id":2
-  //   },
-  //   {
-  //     "name":"Personale",
-  //     "user_id": 1,
-  //     "id":3
-  //   }
-  // ];
-  let lists = useSelector(state => state.lists);
 
   todos = todos.filter(todo => {
     if (activeFilter === 'All'){
@@ -94,8 +66,8 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Routes>
-          <Route exact path='/' element={<MyLists lists={lists} />} />
-          <Route path="/lists" element={<MyLists lists={lists} />} />
+          <Route exact path='/' element={<Lists/>} />
+          <Route path="/lists" element={<Lists/>} />
           <Route path="/todos" element={<MyTodos 
             manageClick={manageClick} 
             onFilterTodo={onFilterTodo}
