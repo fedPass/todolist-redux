@@ -25,28 +25,45 @@
       "name": "agg ora 2",
       "dueDate": "27/12/2021",
       "list_id": 2,
-      "completed": false,
+      "completed": true,
       "id": 5
+    },
+    {
+      "name": "ciao",
+      "dueDate": "18/1/2022",
+      "user_id": 1,
+      "completed": false,
+      "id": 6
     }
   ],
   "filter": [
     "All"
   ],
-  "lists":[
+  "lists": [
     {
-      "name":"Casa",
+      "name": "Casa",
       "user_id": 1,
-      "id":1
+      "id": 1
     },
     {
-      "name":"Lavoro",
+      "name": "Lavoro",
       "user_id": 1,
-      "id":2
+      "id": 2
     },
     {
-      "name":"Personale",
+      "name": "Personale",
       "user_id": 1,
-      "id":3
+      "id": 3
+    },
+    {
+      "name": "new list",
+      "user_id": 1,
+      "id": 6
+    },
+    {
+      "name": "viaggi",
+      "user_id": 1,
+      "id": 7
     }
   ]
 }

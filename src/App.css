@@ -65,6 +65,6 @@ button[disabled]{
 }
 
 .list-box {
-  border-left: 1px dotted grey;
-  border-right: 1px dotted grey;
+  border: 1px dotted grey;
+  padding: 20px
 }
