@@ -1,18 +1,15 @@
 import Todo from './Todo';
-import { useDispatch } from 'react-redux';
-import { deleteTodo,toggleTodo } from './todosSlice';
 
-const Todos = ({todos}) => {
-    const dispatch = useDispatch();
+const Todos = ({todos, removeTodo, updateTodo}) => {
 
     const onDelete = (todo) => {
-        dispatch(deleteTodo(todo))
+        removeTodo(todo.id)
     }
 
     const onToggle = (todo) => {
         //todo è un argomento quindi lo dobbiamo destrutturare
         const newtodo = {...todo, completed:!todo.completed};
-        dispatch(toggleTodo(newtodo))
+        updateTodo(newtodo)
     }
     return (
         <ul className="list-group">

@@ -13,6 +13,9 @@ export const listApi = createApi({
       //providesTags: tag attached to the cached data returned by the query
       providesTags: ['List']
     }),
+    getListById: builder.query({
+      query: (id) =>`/${id}`
+    }),
     deleteList: builder.mutation({
       query: (id) => ({
         url: '/' + id,
@@ -43,5 +46,5 @@ export const listApi = createApi({
   }),
 })
 
-// Export hooks _> use + Nome metodo +Query
-export const { useGetListsQuery, useDeleteListMutation, useAddListMutation, useUpdateListMutation } = listApi
+// Export hooks _> use + Nome metodo +Query/Mutation
+export const { useGetListsQuery, useGetListByIdQuery, useDeleteListMutation, useAddListMutation, useUpdateListMutation } = listApi

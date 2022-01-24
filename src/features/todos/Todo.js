@@ -11,7 +11,7 @@ export default function Todo({todo, onRemoveTodo, onToggleTodo}) {
                 <span className={textStatus}>{todo.name}</span> 
             </div>
             <div className="col-4">
-                <i onClick = {() => onRemoveTodo(todo)} className="ml-5 fas fa-trash-alt cl-red" title="Cancella"></i> 
+                <i onClick = {() => onRemoveTodo(todo)} className="ml-5 fas fa-trash-alt box-delete" title="Cancella"></i> 
             </div>
         </li>
     )

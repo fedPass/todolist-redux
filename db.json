@@ -1,7 +1,7 @@
 {
   "todos": [
     {
-      "completed": false,
+      "completed": true,
       "name": "Pulire garage",
       "dueDate": "20/12/2021",
       "list_id": 1,
@@ -29,11 +29,27 @@
       "id": 5
     },
     {
-      "name": "ciao",
-      "dueDate": "18/1/2022",
+      "name": "visitare Roma",
+      "created_at": "24/1/2022",
+      "user_id": 1,
+      "list_id": 2,
+      "completed": false,
+      "id": 7
+    },
+    {
+      "name": "visitare Palermo",
+      "created_at": "24/1/2022",
+      "user_id": 1,
+      "list_id": 2,
+      "completed": false,
+      "id": 8
+    },
+    {
+      "name": "to do casa",
+      "created_at": "24/1/2022",
       "user_id": 1,
       "completed": false,
-      "id": 6
+      "id": "1"
     }
   ],
   "filter": [
@@ -56,14 +72,14 @@
       "id": 3
     },
     {
-      "name": "new list",
-      "user_id": 1,
-      "id": 6
-    },
-    {
       "name": "viaggi",
       "user_id": 1,
       "id": 7
+    },
+    {
+      "name": "da definire",
+      "user_id": 1,
+      "id": 8
     }
   ]
 }

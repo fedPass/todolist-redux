@@ -38,14 +38,14 @@
   }
 }
 
-.cl-red {
+.box-delete {
   color: red;
   border: 1px solid red;
   padding: 10px;
   border-radius: 5px;
 }
 
-.cl-red:hover {
+.box-delete:hover {
   background-color: red;
   color: #fff;
 }
@@ -67,4 +67,16 @@ button[disabled]{
 .list-box {
   border: 1px dotted grey;
   padding: 20px
+}
+
+.box-edit {
+  color: lightskyblue;
+  border: 1px solid lightskyblue;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.box-edit:hover {
+  background-color: lightskyblue;
+  color: #fff;
 }

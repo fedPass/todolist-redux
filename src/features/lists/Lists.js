@@ -69,20 +69,20 @@ function Lists() {
                 user_id: 1
               } 
         );
-        if(isAddSuccess) {
-            listEl.current.value = '';
-        }
+        listEl.current.value = '';
       } 
 
     return (
-        <div className='mt-5 pt-5'>
-           <h1>My Lists</h1>
-           <AddList element={listEl} manageClick={manageClick} txtBtn={'Aggiungi Lista'}/>
-           <div className='d-flex flex-wrap mt-5'>
-            {
-                lists.map((list) => <List key={list.id} list={list} onRemoveList={(id)=> onRemoveClick(list.id)} />)
-            }
-            </div> 
+        <div className='row d-flex justify-content-center mt-5 pt-5 pb-5'>
+            <div className='col-12 col-md-4'>
+                <h1>My Lists</h1>
+                <AddList element={listEl} manageClick={manageClick} txtBtn={'Aggiungi Lista'}/>
+                <ul className="list-group">
+                    {
+                        lists.map((list) => <List key={list.id} list={list} onRemoveList={(id)=> onRemoveClick(list.id)} />)
+                    }
+                </ul> 
+            </div>
         </div>
     )
 }
