@@ -8,22 +8,32 @@ export const listApi = createApi({
   tagTypes:['List'],
   baseQuery: fetchBaseQuery({ baseUrl: list_url }),
   endpoints: (builder) => ({
+
     getLists: builder.query({
       query: () => '',
       //providesTags: tag attached to the cached data returned by the query
-      providesTags: ['List']
+      providesTags: (result, error) => {
+        if (error || !result) {
+            return [{ type: 'List' }];
+        }
+        return result.map((ele) => ({ type: 'List', id: ele.id }));
+      },
     }),
+
     getListById: builder.query({
-      query: (id) =>`/${id}`
+      query: (id) =>`/${id}`,
+      providesTags: (result, error, id) => [{ type: 'List', id }],
     }),
+
     deleteList: builder.mutation({
       query: (id) => ({
         url: '/' + id,
         method: 'DELETE'
       }),
       //invalidatesTags: determines which cached data will be either refetched or removed from the cache
-      invalidatesTags: ['List']
+      invalidatesTags: (result, error, id) => [{ type: 'List', id }],
     }),
+
     addList: builder.mutation({
       query: (list) => ({
         url: '',
@@ -32,6 +42,7 @@ export const listApi = createApi({
       }),
       invalidatesTags: ['List']
     }),
+
     updateList: builder.mutation({
       //potrei o passare list e destrutturare sotto list.id
       //oppure destrutturo l'arg e prendo id e le altre prop di body
@@ -40,10 +51,11 @@ export const listApi = createApi({
         method: 'PATCH',
         body
       }),
-      //invalidatesTags: determines which cached data will be either refetched or removed from the cache
-      invalidatesTags: ['List']
+      //invalidatesTags: (result,error, id) => [{type:'List', id}]
+      invalidatesTags:  ['List']
     })
-  }),
+
+  })
 })
 
 // Export hooks _> use + Nome metodo +Query/Mutation

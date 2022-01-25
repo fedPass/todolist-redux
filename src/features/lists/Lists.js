@@ -8,8 +8,10 @@ function Lists() {
     const listEl = useRef('');
 
     //rtq -> hook creato per recuperare le liste
+    //get ritorna un oggetto, invece le mutation in array
     const { 
         //mappami i data ritornati come lists e come valore di default metti array vuoto
+        //uso refetch per mostrare lista aggiornata
         data:lists = [], 
         error, 
         isFetching,
@@ -18,7 +20,7 @@ function Lists() {
 
     //la mutation ritorna un array in cui il primo parametro è una funzione trigger mutation(chiamata quando clicco pulsante delete) 
     //poi destrutturo il resto della response di mutation
-    //uso refetch per mostrare lista aggiornata
+    
     const [
         removeList, 
         {isLoading:isDeleting, 
@@ -65,12 +67,12 @@ function Lists() {
         //per non far aggiornare pagina dopo invio del form
         e.preventDefault();
         addList(
-            { name:listEl.current.value,
+            {   name:listEl.current.value,
                 user_id: 1
-              } 
+            } 
         );
         listEl.current.value = '';
-      } 
+    } 
 
     return (
         <div className='row d-flex justify-content-center mt-5 pt-5 pb-5'>

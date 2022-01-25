@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const filterSlice = createSlice(
     {
         name:'filter',
-        initialState:'',
+        initialState:'All',
         reducers: {
             filterTodo(state, action) {
                 //riceve lo state vecchio da state e ritorno quello nuovo da action.payload

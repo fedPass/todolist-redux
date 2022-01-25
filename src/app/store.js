@@ -16,6 +16,10 @@ export const store = configureStore({
   },
   //aggiungo liddelware delle api per aggiornare store
   middleware: (getDefaultMiddleware) => 
-  getDefaultMiddleware().concat(logger,listApi.middleware, todoApi.middleware)
+  getDefaultMiddleware().concat(
+    logger,
+    listApi.middleware,
+    todoApi.middleware
+  )
 });
 setupListeners(store.dispatch);

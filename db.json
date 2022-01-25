@@ -82,12 +82,12 @@
   ],
   "lists": [
     {
-      "name": "Casa",
+      "name": "casa",
       "user_id": 1,
       "id": 1
     },
     {
-      "name": "Lavoro",
+      "name": "Lavoro mod",
       "user_id": 1,
       "id": 2
     },
@@ -102,7 +102,7 @@
       "id": 7
     },
     {
-      "name": "da definire",
+      "name": "daDefinire",
       "user_id": 1,
       "id": 8
     }
