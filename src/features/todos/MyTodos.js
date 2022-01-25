@@ -14,7 +14,7 @@ function MyTodos() {
 
     //useRouteMatch mi aiuta a prelevare parametri dall'url di questa rotta
     let {id} = useParams();
-    id = Number(id);
+    const list_id = Number(id);
 
     //modo alternativo per prendere paramtri dall'url
     const urlParams = new URLSearchParams(window.location.search);
@@ -41,18 +41,18 @@ function MyTodos() {
     // } = useGetTodosQuery();
 
     //faccio la chiamata getTodosById
-    let {data=[]} = useGetTodoByListIdQuery(id);
+    const {data=[]} = useGetTodoByListIdQuery(list_id);
 
     //gestisco filtri
-    let todos = data.filter(todo => {
+    const todos = data.filter(todo => {
         if (activeFilter === 'All'){
-          return true
+          return true;
         } else if (activeFilter === 'Completed'){
           //tornami quelli con completed true
-          return todo.completed
+          return todo.completed;
         } else {
           //tornami i completed false (===todo)
-          return !todo.completed
+          return !todo.completed;
         }
       });
 
@@ -88,7 +88,7 @@ function MyTodos() {
                 created_at : new Date().toLocaleDateString(),
                 user_id: 1,
                 completed:false,
-                id
+                list_id
             } 
         );
         todoEl.current.value = '';

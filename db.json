@@ -45,11 +45,36 @@
       "id": 8
     },
     {
-      "name": "to do casa",
+      "name": "new da definire",
       "created_at": "24/1/2022",
       "user_id": 1,
       "completed": false,
-      "id": "1"
+      "list_id": 8,
+      "id": 9
+    },
+    {
+      "name": "new da def",
+      "created_at": "24/1/2022",
+      "user_id": 1,
+      "completed": true,
+      "list_id": 8,
+      "id": 10
+    },
+    {
+      "name": "def 3",
+      "created_at": "24/1/2022",
+      "user_id": 1,
+      "completed": false,
+      "list_id": 8,
+      "id": 11
+    },
+    {
+      "name": "comprare libri",
+      "created_at": "25/1/2022",
+      "user_id": 1,
+      "completed": false,
+      "list_id": 3,
+      "id": 12
     }
   ],
   "filter": [

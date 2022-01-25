@@ -60,7 +60,13 @@ export const todoApi = createApi({
         },
       }),
       getTodoByListId: builder.query({
-        query: (id) =>`?list_id=${id}`
+        query: (id) =>`?list_id=${id}`,
+        providesTags: (result, error) => {
+            if (error || !result) {
+                return [{ type: 'TODOS' }];
+            }
+            return result.map((ele) => ({ type: 'TODOS', id: ele.id }));
+        },
       }),
       deleteTodo: builder.mutation({
         query: (id) => ({
