@@ -13,10 +13,10 @@ export const listApi = createApi({
       query: () => '',
       //providesTags: tag attached to the cached data returned by the query
       providesTags: (result, error) => {
-        if (error || !result) {
+        if (error || !result || !result.data) {
             return [{ type: 'List' }];
         }
-        return result.map((ele) => ({ type: 'List', id: ele.id }));
+        return result.data.map((ele) => ({ type: 'List', id: ele.id }));
       },
     }),
 

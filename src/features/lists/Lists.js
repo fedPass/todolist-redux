@@ -10,11 +10,12 @@ function Lists() {
     //rtq -> hook creato per recuperare le liste
     //get ritorna un oggetto, invece le mutation in array
     const { 
-        //mappami i data ritornati come lists e come valore di default metti array vuoto
-        //uso refetch per mostrare lista aggiornata
-        data:lists = [], 
+        //destruttura e mappami i data come lists (che inizialmente ha valore array vuoto)
+        //come valore di default di data metti oggetto vuoto
+        data: {data:lists=[]} = {}, 
         error, 
         isFetching,
+        //uso refetch per mostrare lista aggiornata
         refetch:reloadLists 
     } = useGetListsQuery();
 

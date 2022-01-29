@@ -41,7 +41,10 @@ function MyTodos() {
     // } = useGetTodosQuery();
 
     //faccio la chiamata getTodosById
-    const {data=[]} = useGetTodoByListIdQuery(list_id);
+    const {
+        //mappami data soltanto con la key data (che inizialmente è un array vuoto) della response (che è un oggetto)
+        data: {data = [] } ={} 
+    } = useGetTodoByListIdQuery(list_id);
 
     //gestisco filtri
     const todos = data.filter(todo => {

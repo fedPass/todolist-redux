@@ -53,19 +53,19 @@ export const todoApi = createApi({
         query: () => ``,
         //providesTags: tag attached to the cached data returned by the query
         providesTags: (result, error) => {
-            if (error || !result) {
+            if (error || !result || !result.data) {
                 return [{ type: 'TODOS' }];
             }
-            return result.map((ele) => ({ type: 'TODOS', id: ele.id }));
+            return result.data.map((ele) => ({ type: 'TODOS', id: ele.id }));
         },
       }),
       getTodoByListId: builder.query({
         query: (id) =>`?list_id=${id}`,
         providesTags: (result, error) => {
-            if (error || !result) {
+            if (error || !result || !result.data) {
                 return [{ type: 'TODOS' }];
             }
-            return result.map((ele) => ({ type: 'TODOS', id: ele.id }));
+            return result.data.map((ele) => ({ type: 'TODOS', id: ele.id }));
         },
       }),
       deleteTodo: builder.mutation({
