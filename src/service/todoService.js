@@ -49,16 +49,16 @@ export const todoApi = createApi({
     tagTypes: ['TODOS'],
     baseQuery: fetchBaseQuery({ baseUrl: todo_url }),
     endpoints: (builder) => ({
-      getTodos: builder.query({
-        query: () => ``,
-        //providesTags: tag attached to the cached data returned by the query
-        providesTags: (result, error) => {
-            if (error || !result || !result.data) {
-                return [{ type: 'TODOS' }];
-            }
-            return result.data.map((ele) => ({ type: 'TODOS', id: ele.id }));
-        },
-      }),
+      // getTodos: builder.query({
+      //   query: () => ``,
+      //   //providesTags: tag attached to the cached data returned by the query
+      //   providesTags: (result, error) => {
+      //       if (error || !result || !result.data) {
+      //           return [{ type: 'TODOS' }];
+      //       }
+      //       return result.data.map((ele) => ({ type: 'TODOS', id: ele.id }));
+      //   },
+      // }),
       getTodoByListId: builder.query({
         query: (id) =>`?list_id=${id}`,
         providesTags: (result, error) => {

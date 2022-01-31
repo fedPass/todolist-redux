@@ -11,7 +11,7 @@ function Header() {
           <div className="navbar-nav">
             <NavLink className='nav-item nav-link' activeClassName='active' to="/">Home <span className="sr-only">(current)</span></NavLink>
             <NavLink className='nav-item nav-link' activeClassName='active' to="/lists">Lists</NavLink>
-            <NavLink className='nav-item nav-link' activeClassName='active' to="/todos">Todos</NavLink>
+            {/* <NavLink className='nav-item nav-link' activeClassName='active' to="/todos">Todos</NavLink> */}
             <NavLink className='nav-item nav-link' activeClassName='active' to="/login">Login</NavLink>
             <NavLink className={({ isActive }) => (isActive ? 'nav-item nav-link active' : 'nav-item nav-link')} to="/register">Register</NavLink>
           </div>
