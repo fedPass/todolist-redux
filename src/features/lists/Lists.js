@@ -2,6 +2,7 @@ import { useGetListsQuery, useDeleteListMutation, useAddListMutation, useUpdateL
 import React, {useEffect, useRef} from 'react';
 import List from './List';
 import AddList from '../../components/AddElement';
+import { toast } from 'react-toastify';
 
 function Lists() {
 
@@ -14,7 +15,9 @@ function Lists() {
         //come valore di default di data metti oggetto vuoto
         data: {data:lists=[]} = {}, 
         error, 
+        //isLoading si riferisce soltanto alla prima richiesta, but not for subsequent requests, per questo usiamo isFetching
         isFetching,
+        isSuccess,
         //uso refetch per mostrare lista aggiornata
         refetch:reloadLists 
     } = useGetListsQuery();
@@ -25,7 +28,7 @@ function Lists() {
     const [
         removeList, 
         {isLoading:isDeleting, 
-        isSuccess, 
+        isSuccess:isDeleted, 
         error:deleteError, 
         isError}
     ] = useDeleteListMutation();
@@ -57,12 +60,20 @@ function Lists() {
     //quando l'oggetto viene montato controllo il loading ed eventuali errori
     if (isFetching) {
         console.log('Loading list');
+        toast.info('Loading lists');
     }
     if (error) {
-        alert(error.status)
+        alert(error.status);
+        toast.error(error.status);
     }
-        return () => {}
-    }, [error, isFetching]);  
+    if (isSuccess) {
+        toast.success('Liste caricate');
+    }
+    if (!isFetching) {
+        toast.dismiss();
+    }
+    return () => {}
+    }, [error, isFetching, isSuccess]);  
 
     const manageClick = (e) => {
         //per non far aggiornare pagina dopo invio del form

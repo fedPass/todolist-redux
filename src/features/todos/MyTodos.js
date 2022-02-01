@@ -2,11 +2,12 @@ import Todos from './Todos';
 import FilterTodo from './FilterTodo';
 import AddTodo from '../../components/AddElement';
 import ErrorBoundary from '../../components/ErrorBoundary';
-import {useRef} from 'react';
+import {useRef, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { filterTodo } from './filterSlice';
 import { useGetTodosQuery, useDeleteTodoMutation, useAddTodoMutation, useUpdateTodoMutation, useGetTodoByListIdQuery} from '../../service/todoService';
 import { useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 function MyTodos() {
 
@@ -43,7 +44,10 @@ function MyTodos() {
     //faccio la chiamata getTodosById
     const {
         //mappami data soltanto con la key data (che inizialmente è un array vuoto) della response (che è un oggetto)
-        data: {data = [] } ={} 
+        data: {data = [] } ={},
+        error,
+        isFetching,
+        isSuccess
     } = useGetTodoByListIdQuery(list_id);
 
     //gestisco filtri
@@ -96,6 +100,22 @@ function MyTodos() {
         );
         todoEl.current.value = '';
     } 
+
+    useEffect(() => {
+        if (isFetching) {
+            toast.info('Loading todos');
+        }
+        if (error) {
+            toast.error(error.status);
+        }
+        if (isSuccess) {
+            toast.success('Caricamento completato');
+        }
+        if (!isFetching) {
+            toast.dismiss();
+        }
+        return () => {}
+        }, [error, isFetching, isSuccess]);
     
     return (
         <div className='row d-flex justify-content-center mt-5 pt-5 pb-5'>
