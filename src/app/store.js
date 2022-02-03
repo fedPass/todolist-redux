@@ -4,6 +4,8 @@ import { listApi } from '../service/listService';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { todoApi } from '../service/todoService';
 import filterReducer from '../features/todos/filterSlice';
+import { authApi } from '../service/loginService';
+import userReducer from '../features/auth/userSlice';
 
 export const store = configureStore({
   //preloadedState,
@@ -12,14 +14,17 @@ export const store = configureStore({
     //con thunk era -> todos: todosReducer,
     [todoApi.reducerPath]:todoApi.reducer,
     filter:filterReducer,
-    [listApi.reducerPath]:listApi.reducer
+    [listApi.reducerPath]:listApi.reducer,
+    [authApi.reducerPath]:authApi.reducer,
+    user:userReducer
   },
   //aggiungo liddelware delle api per aggiornare store
   middleware: (getDefaultMiddleware) => 
   getDefaultMiddleware().concat(
     logger,
     listApi.middleware,
-    todoApi.middleware
+    todoApi.middleware,
+    authApi.middleware
   )
 });
 setupListeners(store.dispatch);

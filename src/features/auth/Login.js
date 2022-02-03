@@ -1,14 +1,56 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
+import { useLoginMutation } from '../../service/loginService';
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+import { userLogin } from './userSlice';
+import { useDispatch } from 'react-redux';
 
 function Login() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    
+    //inizializzo state e funzione che uso per prelevo i dati dagli input
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    //istanzio l'hook che ho importato da authService
+    //primo arg -> method con cui chiamo l'endpoint
+    //sec arg -> oggetto in cui ricevo i dati e info su chiamata
+    const [login,{error,isSuccess,data}] = useLoginMutation();
+
+    //console.log(error,isSuccess,data);
+
+    const verifyLogin = (e) => {
+        e.preventDefault();
+        //la funzione che abbiamo istanziato con la mutation per chiamare l'endpoint relativo
+        login({email,password});
+        console.log(error,isSuccess,data);
+    }
+
+    useEffect(() => {
+        //verifico se ho i data quando il componente viene montato
+        if(data && data.access_token) {
+            console.log('data',data);
+            //salvo token 
+            //localStorage.setItem('todolist-data',JSON.stringify(data));
+            dispatch(userLogin(data));
+            //reindirizzo alla pagina /lists
+            navigate("/lists");
+            console.log('after naviagte() - redirect to lists');
+        }
+        if (error) {toast.error(error.data.error)}
+        if (isSuccess) {toast.success('login effettuato con successo')}
+        return () => {}
+        }, [error, isSuccess,dispatch,navigate,data]);
+
   return (
     <div className="col-md-3 m-auto">
-      <form className="mt-5 pt-5">
+      <form method='POST' onSubmit={verifyLogin} className="mt-5 pt-5">
         <div className="form-group">
-          <input type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Email usata per la registrazione" />
+          <input value={email} onChange={(e)=>setEmail(e.target.value)} type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Email usata per la registrazione" />
         </div>
         <div className="form-group">
-          <input type="password" name="password" className="form-control" id="password" placeholder="Password" />
+          <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name="password" className="form-control" id="password" placeholder="Password" />
         </div>
         <div className="form-check">
           <input type="checkbox" name="checkbox" className="form-check-input" id="remember" />

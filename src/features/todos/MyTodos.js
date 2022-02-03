@@ -47,7 +47,8 @@ function MyTodos() {
         data: {data = [] } ={},
         error,
         isFetching,
-        isSuccess
+        isSuccess,
+        refetch:reloadTodos 
     } = useGetTodoByListIdQuery(list_id);
 
     //gestisco filtri
@@ -66,7 +67,7 @@ function MyTodos() {
     const [
         removeTodo, 
         {isLoading:isDeletingTodo, 
-        isSuccess: isSuccessTodo, 
+        isSuccess: isDeletedTodo, 
         error:deleteErrorTodo, 
         isError: isErrorTodo}
     ] = useDeleteTodoMutation();
@@ -99,6 +100,8 @@ function MyTodos() {
             } 
         );
         todoEl.current.value = '';
+        reloadTodos();
+        toast.info('Todo aggiunto');
     } 
 
     useEffect(() => {
@@ -113,6 +116,9 @@ function MyTodos() {
         }
         if (!isFetching) {
             toast.dismiss();
+        }
+        if (isDeletedTodo) {
+            toast.info('Todo eliminato')
         }
         return () => {}
         }, [error, isFetching, isSuccess]);

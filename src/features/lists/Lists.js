@@ -46,34 +46,15 @@ function Lists() {
         //unwrap per attaccarci alla promise
         .unwrap()
         .then(()=>{
+            toast.info('Lista rimossa');
             //posso commentare la refetch perchè utilizzo i tag per invalidare la cache e renderizzare i nuovi dati
             //reloadLists()
         })
         .catch((err)=>{
-            alert(err.message)
+            alert(err.message);
+            toast.error(err.message);
         })
     }
-
-    //uso use Effect per fare in modo da vedere event error soltanto quando viene montato
-    //altrimenti andrebbe in loop
-    useEffect(() => {
-    //quando l'oggetto viene montato controllo il loading ed eventuali errori
-    if (isFetching) {
-        console.log('Loading list');
-        toast.info('Loading lists');
-    }
-    if (error) {
-        alert(error.status);
-        toast.error(error.status);
-    }
-    if (isSuccess) {
-        toast.success('Liste caricate');
-    }
-    if (!isFetching) {
-        toast.dismiss();
-    }
-    return () => {}
-    }, [error, isFetching, isSuccess]);  
 
     const manageClick = (e) => {
         //per non far aggiornare pagina dopo invio del form
@@ -84,6 +65,7 @@ function Lists() {
             } 
         );
         listEl.current.value = '';
+        toast.info('Lista aggiunta');
     } 
 
     return (
