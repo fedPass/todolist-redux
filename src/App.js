@@ -5,6 +5,8 @@ import Lists from './features/lists/Lists';
 import Header from './components/Header';
 import EditListName from './features/lists/EditListName';
 import Login from "./features/auth/Login";
+import Logout from "./features/auth/Logout";
+import Register from "./features/auth/Register";
 
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,11 +20,13 @@ function App() {
         <Header/>
         <Routes>
           <Route path='/login' element={<Login/>} />
+          <Route path='/register' element={<Register/>} />
 
-          <Route exact path='/' element={<PrivateRoute><Lists/></PrivateRoute>} />
+          <Route path='/' element={<PrivateRoute><Lists/></PrivateRoute>} />
           <Route path="/lists" element={<PrivateRoute><Lists/></PrivateRoute>} />
           <Route path='/list/:id/todos' element={<PrivateRoute><MyTodos/></PrivateRoute>} />
           <Route path='/list/:id/edit' element={<PrivateRoute><EditListName/></PrivateRoute>} />
+          <Route path='/logout' element={<PrivateRoute><Logout/></PrivateRoute>} />
 
           {/* <Route exact path='/' element={<Lists/>} />
           <Route path="/lists" element={<Lists/>} />

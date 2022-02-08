@@ -31,12 +31,11 @@ function Login() {
         //verifico se ho i data quando il componente viene montato
         if(data && data.access_token) {
             console.log('data',data);
-            //salvo token 
-            //localStorage.setItem('todolist-data',JSON.stringify(data));
+            //chiamo la store per salvare token in LS e salvare state.user
             dispatch(userLogin(data));
             //reindirizzo alla pagina /lists
             navigate("/lists");
-            console.log('after naviagte() - redirect to lists');
+            console.log('montaggio terminato - redirect to lists');
         }
         if (error) {toast.error(error.data.error)}
         if (isSuccess) {toast.success('login effettuato con successo')}
@@ -54,9 +53,7 @@ function Login() {
         </div>
         <div className="form-check">
           <input type="checkbox" name="checkbox" className="form-check-input" id="remember" />
-          <label className="form-check-label" htmlFor="remember">
-            Remember me
-          </label>
+          <label className="form-check-label" htmlFor="remember">Remember me</label>
         </div>
         <button type="submit" className="btn btn-primary  mt-3">
           Login
