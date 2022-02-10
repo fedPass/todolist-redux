@@ -66,26 +66,26 @@ function MyTodos() {
 
     const [
         removeTodo, 
-        {isLoading:isDeletingTodo, 
-        isSuccess: isDeletedTodo, 
-        error:deleteErrorTodo, 
-        isError: isErrorTodo}
-    ] = useDeleteTodoMutation();
+        {isSuccess: isDeletedTodo
+        // ,isLoading:isDeletingTodo,  
+        // error:deleteErrorTodo, 
+        // isError: isErrorTodo
+    }] = useDeleteTodoMutation();
 
     const [
-        addTodo, 
-        {isLoading:isAddingTodo, 
-        isSuccess:isAddSuccessTodo, 
-        error:addErrorTodo, 
-        isError:isAddErrorTodo}
+        addTodo
+        // ,{isLoading:isAddingTodo, 
+        // isSuccess:isAddSuccessTodo, 
+        // error:addErrorTodo, 
+        // isError:isAddErrorTodo}
     ] = useAddTodoMutation();
 
     const [
-        updateTodo, 
-        {isLoading:isUpdatingTodo, 
-        isSuccess:isUpdateSuccessTodo, 
-        error:addErrorUpdateTodo, 
-        isError:isAddErrorUpdateTodo}
+        updateTodo
+        // ,{isLoading:isUpdatingTodo, 
+        // isSuccess:isUpdateSuccessTodo, 
+        // error:addErrorUpdateTodo, 
+        // isError:isAddErrorUpdateTodo}
     ] = useUpdateTodoMutation();
 
     const manageClick = (e) => {
@@ -105,23 +105,19 @@ function MyTodos() {
     } 
 
     useEffect(() => {
-        if (isFetching) {
-            toast.info('Loading todos');
-        }
+        if (isFetching) {toast.info('Loading todos')}
+        if (!isFetching) {toast.dismiss()}
         if (error) {
-            toast.error(error.status);
+            console.log(error);
+            toast.error(error)
+            if (error.data.message){
+                toast.error(error.data.message)
+            }
         }
-        if (isSuccess) {
-            toast.success('Caricamento completato');
-        }
-        if (!isFetching) {
-            toast.dismiss();
-        }
-        if (isDeletedTodo) {
-            toast.info('Todo eliminato')
-        }
+        if (isSuccess) {toast.success('Caricamento completato')}
+        if (isDeletedTodo) {toast.info('Todo eliminato')}
         return () => {}
-        }, [error, isFetching, isSuccess]);
+        }, [error, isFetching, isSuccess,isDeletedTodo]);
     
     return (
         <div className='row d-flex justify-content-center mt-5 pt-5 pb-5'>

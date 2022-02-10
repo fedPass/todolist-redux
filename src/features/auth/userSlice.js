@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-let initialState = null;
+let initialState = {
+    user:null,
+    token:null
+};
 //verifico se ho il token salvato in local storage
 const todoData= localStorage.getItem('todolist-data');
 //se esiste verifichiamo il token che parsifichiamo il json visto che viene passato come stringa
@@ -28,63 +31,74 @@ if (todoData) {
         } else {
             //se il token è valido imposta initialState con i dati utente ritornati dal server
             initialState = {
-                name:data.name,
-                email: data.email
+                user:{
+                    name:data.name,
+                    email: data.email
+                },
+                token:{token:data.access_token}
+                
             }
         }
     }
 }
 
 const userSlice = createSlice({
-    name: 'user',
+    name: 'auth',
     initialState,
     reducers: {
-      userLogin(state, action) {
-          console.log('sto dentro userSlice - userLogin');
-          //prendiamo stato attuale
-        const data = action.payload;
-        //se ci sono i dati
-        if(data && data.name) {
-            //salv i dati in local storage
-            localStorage.setItem('todolist-data', JSON.stringify(data));
-            //impostiamo il nuovo stato
-            state={
-                name:data.name,
-                email: data.email
+        //non lavoriamo mai direttamente sullo state ma su una specie di proxy (draft)
+        //in questo modo non ho bisogno di fare return 
+        //perchè modifichiamo le proprietà dell'oggetto
+        //REGOLA: o modifico draft o faccio return del nuovo state
+        userLogin(draft, action) {
+            console.log('sto dentro userSlice - userLogin');
+            //prendiamo stato attuale
+            const data = action.payload;
+            //se ci sono i dati
+            if(data && data.name) {
+                //salv i dati in local storage
+                localStorage.setItem('todolist-data', JSON.stringify(data));
+                //impostiamo il nuovo stato
+                draft.user={
+                    name:data.name,
+                    email: data.email
+                }
+                draft.token=data.access_token
+            } else {
+                draft.user = null;
+                draft.token = null;
             }
-        } else {
-            state = null;
-        }
-        return state;
-      },
-      userLogout(state) {
-        console.log('sto dentro userSlice - userLogout');
-        //elimino token da LS
-        localStorage.removeItem('todolist-data');
-        console.log('token rimosso da LS');
-        //imposto lo state di user a null
-        return state = null;
-      },
-      userRegistration(state, action) {
-        console.log('sto dentro userSlice - userRegistration');
-        //prendiamo stato attuale
-      const data = action.payload;
-      //se ci sono i dati
-      if(data && data.name) {
-          //salv i dati in local storage
-          localStorage.setItem('todolist-data', JSON.stringify(data));
-          //impostiamo il nuovo stato
-          state={
-              name:data.name,
-              email: data.email
-          }
-      } else {
-          state = null;
-      }
-      return state;
-    },
-    },
-  })
+        },
+        userLogout(draft) {
+            console.log('sto dentro userSlice - userLogout');
+            //elimino token da LS
+            localStorage.removeItem('todolist-data');
+            console.log('token rimosso da LS');
+            //imposto lo state di user a null
+            draft.user = null;
+            draft.token = null;
+        },
+        userRegistration(draft, action) {
+            console.log('sto dentro userSlice - userRegistration');
+            //prendiamo stato attuale
+            const data = action.payload;
+            //se ci sono i dati
+            if(data && data.name) {
+                //salv i dati in local storage
+                localStorage.setItem('todolist-data', JSON.stringify(data));
+                //impostiamo il nuovo stato
+                draft.user={
+                    name:data.name,
+                    email: data.email
+                }
+                draft.token=data.access_token
+            } else {
+                draft.user = null;
+                draft.token = null;
+            }
+        },
+    }
+})
   
-  export const { userLogin, userLogout,userRegistration } = userSlice.actions;
-  export default userSlice.reducer
+export const { userLogin, userLogout,userRegistration } = userSlice.actions;
+export default userSlice.reducer

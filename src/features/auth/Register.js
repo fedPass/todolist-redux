@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import { useRegisterMutation } from '../../service/loginService';
+import { useRegisterMutation } from '../../service/authService';
 import { toast } from 'react-toastify';
 import { userRegistration } from './userSlice';
 import { useDispatch } from 'react-redux';
@@ -42,13 +42,25 @@ function Register() {
             dispatch(userRegistration(data));
             //reindirizzo alla pagina /lists
             navigate("/lists");
-            console.log('montaggio terminato - redirect to lists');
+            console.log('arrivati dati dopo registrazione - redirect to lists');
         }
-        if (error) {toast.error(error)};
         if (isSuccess) {toast.success('user creato con successo')}
+        if (error) {
+            console.log('error',error);
+            const errors = error.data.errors;
+            console.log('errors',errors);
+            for (const error in errors) {
+                if (Object.hasOwnProperty.call(errors, error)) {
+                    const element = errors[error][0];
+                    console.log('error',element);
+                    toast.error(element)
+                }
+            }
+        };
+        
       return () => {
       };
-    }, [error, isSuccess]);
+    }, [error, isSuccess, data, dispatch, navigate]);
     
   return (
     <div className="col-md-3 m-auto">
@@ -57,7 +69,8 @@ function Register() {
             <input value={name} onChange={(e)=>setName(e.target.value)} type="text" name="name" className="form-control" id="name" placeholder="Inserisci il tuo nominativo" />
         </div>
         <div className="form-group">
-            <input value={email} onChange={(e)=>setEmail(e.target.value)} type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Inserisci la tua email" />
+            {/* <input value={email} onChange={(e)=>setEmail(e.target.value)} type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Inserisci la tua email" /> */}
+            <input value={email} onChange={(e)=>setEmail(e.target.value)} name="email" className="form-control" id="email" placeholder="Inserisci la tua email" />
         </div>
         <div className="form-group">
             <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name="password" className="form-control" id="password" placeholder="Digita la password" />
@@ -71,7 +84,10 @@ function Register() {
             I accept terms and conditions
             </label>
         </div>
-        <button disabled={(password!=password2 && password!='' && password2!='') || (acceptTerms == false) ? true:false} type="submit" id='btnRegister' className="btn btn-primary mt-3">
+        {/* <button disabled={(password!=password2 && password!='' && password2!='') || (acceptTerms == false) ? true:false} type="submit" id='btnRegister' className="btn btn-primary mt-3">
+            Registrati
+        </button> */}
+        <button type="submit" id='btnRegister' className="btn btn-primary mt-3">
             Registrati
         </button>
         </form>

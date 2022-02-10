@@ -3,8 +3,21 @@ import React, {useEffect, useRef} from 'react';
 import List from './List';
 import AddList from '../../components/AddElement';
 import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+import { useLogoutMutation } from '../../service/authService';
+import { userLogout } from '../auth/userSlice';
+import { useDispatch } from 'react-redux';
+
 
 function Lists() {
+
+    //dichiaro navigate e dispatch
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    //istanzio l'hook della mutation
+    const [logout] =useLogoutMutation();
+
+    const data= localStorage.getItem('todolist-data');
 
     const listEl = useRef('');
 
@@ -26,19 +39,19 @@ function Lists() {
     //poi destrutturo il resto della response di mutation
     
     const [
-        removeList, 
-        {isLoading:isDeleting, 
-        isSuccess:isDeleted, 
-        error:deleteError, 
-        isError}
+        removeList 
+        // ,{isLoading:isDeleting, 
+        // isSuccess:isDeleted, 
+        // error:deleteError, 
+        // isError}
     ] = useDeleteListMutation();
 
     const [
-        addList, 
-        {isLoading:isAdding, 
-        isSuccess:isAddSuccess, 
-        error:addError, 
-        isError:isAddError}
+        addList 
+        // ,{isLoading:isAdding, 
+        // isSuccess:isAddSuccess, 
+        // error:addError, 
+        // isError:isAddError}
     ] = useAddListMutation();
 
     function onRemoveClick(id) {
@@ -67,6 +80,32 @@ function Lists() {
         listEl.current.value = '';
         toast.info('Lista aggiunta');
     } 
+
+    useEffect(() => {
+        //verifico se ho i data quando il componente viene montato
+        if(data && data.access_token) {
+            console.log('ho dati token');
+            //chiamo la store per salvare token in LS e salvare state.user
+        }
+        if (isSuccess) {toast.success('liste caricate con successo')};
+        if (isFetching) {toast.info('Sto caricando le liste')};
+        if (!isFetching) {toast.dismiss()};
+        if (error) {
+            if (error?.data?.message){
+                toast.error(error.data.message)
+                //aggiorno la store tramite userslice
+                dispatch(userLogout());
+                //invalido token lato server
+                logout();
+                //uso Navigate per reindirizzare alla pagina login
+                navigate("/login");
+            }
+            toast.error(error)
+        };
+        
+      return () => {
+      };
+    }, [error,isFetching,isSuccess,data]);
 
     return (
         <div className='row d-flex justify-content-center mt-5 pt-5 pb-5'>

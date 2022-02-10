@@ -4,7 +4,7 @@ import { listApi } from '../service/listService';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { todoApi } from '../service/todoService';
 import filterReducer from '../features/todos/filterSlice';
-import { authApi } from '../service/loginService';
+import { authApi } from '../service/authService';
 import userReducer from '../features/auth/userSlice';
 
 export const store = configureStore({
@@ -16,7 +16,7 @@ export const store = configureStore({
     filter:filterReducer,
     [listApi.reducerPath]:listApi.reducer,
     [authApi.reducerPath]:authApi.reducer,
-    user:userReducer
+    auth:userReducer
   },
   //aggiungo liddelware delle api per aggiornare store
   middleware: (getDefaultMiddleware) => 

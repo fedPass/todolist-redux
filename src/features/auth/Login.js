@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from 'react';
-import { useLoginMutation } from '../../service/loginService';
+import { useLoginMutation } from '../../service/authService';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { userLogin } from './userSlice';
@@ -37,7 +37,10 @@ function Login() {
             navigate("/lists");
             console.log('montaggio terminato - redirect to lists');
         }
-        if (error) {toast.error(error.data.error)}
+        if (error) {
+          console.log(error);
+          toast.error(error.message)
+        }
         if (isSuccess) {toast.success('login effettuato con successo')}
         return () => {}
         }, [error, isSuccess,dispatch,navigate,data]);

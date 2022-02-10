@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
-import { useLogoutMutation } from '../../service/loginService';
+import { useLogoutMutation } from '../../service/authService';
 import { userLogout } from './userSlice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -24,7 +24,7 @@ function Logout() {
         if (error) {toast.error(error.data.error)}
         if (isSuccess) {toast.success('logout effettuato con successo')}
       return () => {};
-    }, [navigate,data,error,isSuccess]);
+    }, [navigate,dispatch,data,error,isSuccess]);
     
     
   return (

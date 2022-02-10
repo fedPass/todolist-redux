@@ -3,14 +3,24 @@ import { list_url } from '../config';
 
 // Define a service using a base URL and expected endpoints
 export const listApi = createApi({
-  reducerPath: 'lists',
+  reducerPath: 'listService',
   //tag: 'label' attached to cached data that is read after a mutation
   tagTypes:['List'],
-  baseQuery: fetchBaseQuery({ baseUrl: list_url }),
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: list_url,
+    prepareHeaders: (headers, { getState }) => {
+      headers.set('Accept', `application/json`)
+      const token = getState().auth.token;
+      if (token) {
+       headers.set('authorization', `Bearer ${token}`)
+      }
+      return headers
+    },
+  }),
   endpoints: (builder) => ({
 
     getLists: builder.query({
-      query: () => '',
+      query: () => (''),
       //providesTags: tag attached to the cached data returned by the query
       providesTags: (result, error) => {
         if (error || !result || !result.data) {
@@ -21,14 +31,14 @@ export const listApi = createApi({
     }),
 
     getListById: builder.query({
-      query: (id) =>`/${id}`,
+      query: (id) =>({url:`/${id}`}),
       providesTags: (result, error, id) => [{ type: 'List', id }],
     }),
 
     deleteList: builder.mutation({
       query: (id) => ({
         url: '/' + id,
-        method: 'DELETE'
+        method: 'DELETE',
       }),
       //invalidatesTags: determines which cached data will be either refetched or removed from the cache
       invalidatesTags: (result, error, id) => [{ type: 'List', id }],
@@ -38,7 +48,7 @@ export const listApi = createApi({
       query: (list) => ({
         url: '',
         method: 'POST',
-        body: list,
+        body: list
       }),
       invalidatesTags: ['List']
     }),
@@ -49,6 +59,7 @@ export const listApi = createApi({
       query: ({id,...body}) => ({
         url: '/' + id,
         method: 'PATCH',
+        
         body
       }),
       //invalidatesTags: (result,error, id) => [{type:'List', id}]

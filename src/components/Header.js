@@ -2,7 +2,8 @@ import { Link, NavLink } from "react-router-dom";
 import {useSelector} from 'react-redux';
 
 function Header() {
-  const user = useSelector(state=>state.user);
+  //const user = useSelector(state=>state.auth.user);
+  const user = useSelector(state=>state.auth.user);
     return (
 <nav className="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
         <Link className="navbar-brand" to="/">React App</Link>

@@ -4,17 +4,19 @@ import { auth_url } from '../config';
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
-    reducerPath: 'auth',
+    reducerPath: 'authService',
     baseQuery: fetchBaseQuery({ 
         baseUrl: auth_url,
         prepareHeaders: (headers, { getState }) => {
-            const token = getState().auth.token
+            headers.set('Accept', `application/json`)
+            const token = getState().auth.token;
+            console.log('token',token);
             // If we have a token set in state, let's assume that we should be passing it.
             if (token) {
               headers.set('authorization', `Bearer ${token}`)
             }
             return headers
-          },
+        },
      }),
     endpoints: (builder) => ({
         login: builder.mutation({
